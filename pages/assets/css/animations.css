@@ -1,0 +1,106 @@
+/* Fade-in animation for general sections */
+@keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Fade-in animation for testimonials */
+  @keyframes fadeInTestimonial {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Fade-in animation for the Call-to-Action section */
+  @keyframes fadeInCTA {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Fade-in animation for the hero section */
+  @keyframes fadeInHero {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Fade-in animation for the services section */
+  @keyframes fadeInService {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Fade-in with delay for sequential elements (like testimonials) */
+  @keyframes fadeInDelay {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Apply these classes for the animation effects */
+  .animate-fadeIn {
+    animation: fadeIn 1s ease-out forwards;
+  }
+  
+  .animate-fadeInTestimonial {
+    animation: fadeInTestimonial 1s ease-out forwards;
+  }
+  
+  .animate-fadeInCTA {
+    animation: fadeInCTA 1s ease-out forwards;
+  }
+  
+  .animate-fadeInHero {
+    animation: fadeInHero 1s ease-out forwards;
+  }
+  
+  .animate-fadeInService {
+    animation: fadeInService 1s ease-out forwards;
+  }
+  
+  .animate-fadeInDelay {
+    animation: fadeInDelay 1s ease-out forwards;
+  }
+  
+  .animate-fadeInDelay-200 {
+    animation: fadeInDelay 1s ease-out forwards;
+    animation-delay: 0.2s;
+  }
+  
+  .animate-fadeInDelay-400 {
+    animation: fadeInDelay 1s ease-out forwards;
+    animation-delay: 0.4s;
+  }
