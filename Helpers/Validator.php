@@ -32,7 +32,7 @@ class Validator
         if($fileSize > $allowedSize) {
             throw new Exception("File size exceed the limit");
         }
-        $uploadDir = '/images/';
+        $uploadDir = 'images/';
 
         if(!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777,true);
