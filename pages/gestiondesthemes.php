@@ -1,16 +1,25 @@
 <?php
 
 use Younes\DriveLoc\Helpers\Helpers;
-use Younes\DriveLoc\Controller\UserController;
+use Younes\DriveLoc\Controller\AdminController;
 use Younes\DriveLoc\Config\DBConnection;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $db = DBConnection::getConnection()->conn;
 
-$user = new UserController($db);
+$admin = new AdminController($db);
 
-$allthemes = $user->getAllThemes();
+$adminData = $admin->validateUser();
+
+if($adminData['role_id'] != 1) {
+    http_response_code(403);
+    echo "You are not authorized to access this page";
+    die();
+}
+
+$allthemes = $admin->getAllThemes();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

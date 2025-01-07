@@ -11,7 +11,11 @@ require_once '../../../vendor/autoload.php';
 $admin = new AdminController(DBConnection::getConnection()->conn);
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $fk_user_id = 1; // TODO: update it to Get the current id
+    $adminData = $admin->validateUser();
+    if($adminData['role_id'] != 1) {
+        http_response_code(403);
+    }
+    $fk_user_id = $adminData['user_id'];
     $theme = new Theme($_POST['theme_nom'], $_FILES['theme_image'], $fk_user_id);
 
     if(move_uploaded_file($_FILES['theme_image']['tmp_name'], 'images/' . $_FILES['theme_image']['name'])) {
