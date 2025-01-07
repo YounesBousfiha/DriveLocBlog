@@ -32,7 +32,7 @@ trait TagsController
 
     public function deleteTag($id)
     {
-        $query = "UPDATE $this->tableTags SET is_deleted = 1 WHERE tag_id = :id";
+        $query = "DELETE FROM $this->tableTags WHERE tag_id = :id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();

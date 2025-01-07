@@ -176,4 +176,16 @@ class Helpers
         ';
     }
 
+    public static function renderTag($tag) {
+        return '        <tr data-id="'. $tag['tag_id'] .'">
+                                    <td class="w-1/4 text-left py-3 px-4">' . $tag['tag_nom'] . '</td>
+                                    <td class="text-left py-3 px-4 flex space-x-2">                                       
+                                        <button class="bg-red-500 text-white px-2 py-1 rounded flex items-center">
+                                            <a href="./actions/tags/delete_tags.php?id=' . $tag['tag_id'] . '"><i class="fas fa-times"></i> </a>
+                                        </button>
+                                        
+                                    </td>
+                                </tr>';
+    }
+
 }

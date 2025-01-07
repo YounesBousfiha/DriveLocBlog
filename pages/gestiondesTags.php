@@ -1,26 +1,18 @@
 <?php
 
-use Younes\DriveLoc\Helpers\Helpers;
 use Younes\DriveLoc\Controller\AdminController;
+use Younes\DriveLoc\Helpers\Helpers;
 use Younes\DriveLoc\Config\DBConnection;
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once '../vendor/autoload.php';
 
 $db = DBConnection::getConnection()->conn;
 
-$admin = new AdminController($db);
+$adminController = new AdminController($db);
 
-$adminData = $admin->validateUser();
-
-if($adminData['fk_role_id'] != 1) {
-    http_response_code(403);
-    echo "You are not authorized to access this page";
-    die();
-}
-
-$allthemes = $admin->getAllThemes();
-
+$allTags = $adminController->getAllTags();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,6 +66,10 @@ $allthemes = $admin->getAllThemes();
         <a href="gestiondesthemes.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
             <i class="fas fa-blog mr-3"></i>
             Gestion des themes
+        </a>
+        <a href="gestiondesTags.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <i class="fas fa-tags mr-3"></i>
+            Gestion des Tags
         </a>
         <a href="../index.php" class="flex items-center active-nav-link text-white py-4 pl-6 nav-item">
             <i class="fas fa-home mr-3"></i>
@@ -131,13 +127,17 @@ $allthemes = $admin->getAllThemes();
                 <i class="fas fa-user mr-3"></i>
                 Gestion des Client
             </a>
+            <a href="gestionAvis.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                <i class="fas fa-comments mr-3"></i>
+                Gestion des Avis
+            </a>
             <a href="gestiondesthemes.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                 <i class="fas fa-blog mr-3"></i>
                 Gestion des themes
             </a>
-            <a href="gestionAvis.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                <i class="fas fa-comments mr-3"></i>
-                Gestion des Avis
+            <a href="gestiondesTags.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                <i class="fas fa-tags mr-3"></i>
+                Gestion des Tags
             </a>
             <a href="../index.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                 <i class="fas fa-home mr-3"></i>
@@ -151,7 +151,7 @@ $allthemes = $admin->getAllThemes();
                 <i class="fas fa-user mr-3"></i>
                 My Account
             </a>
-            <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+            <a href="./actions/auth/logout.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                 <i class="fas fa-sign-out-alt mr-3"></i>
                 Sign Out
             </a>
@@ -163,45 +163,26 @@ $allthemes = $admin->getAllThemes();
 
     <div x-show="isModalOpen" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" @click.away="isModalOpen = false">
         <div class="rounded-lg bg-white p-6">
-            <h2 class="mb-4 text-2xl">Add theme</h2>
-            <form action="./actions/theme/create_theme.php" method="POST" enctype="multipart/form-data">
-                <div id="car-fields">
+            <h2 class="mb-4 text-2xl">Add Tag</h2>
+            <form action="./actions/tags/create_tags_mass.php" method="POST">
+                <div id="tags-fields">
                     <div class="flex flex-col space-y-4">
-                        <input class="rounded border border-gray-300 p-2" type="text" name="theme_nom" placeholder="Theme Nom" required />
-                        <input class="rounded border border-gray-300 p-2" type="file" name="theme_image" required />
+                        <input class="rounded border border-gray-300 p-2" type="text" name="tags[0][tag_nom]" placeholder="Tag Nom" required />
                     </div>
                 </div>
                 <div class="mt-3 flex justify-center">
                     <button type="button" class="mr-2 rounded bg-gray-500 px-4 py-2 text-white" @click="isModalOpen = false">Cancel</button>
-                    <button type="submit" class="rounded bg-blue-500 px-4 py-2 text-white">Add theme</button>
+                    <button type="submit" class="rounded bg-blue-500 px-4 py-2 text-white">Add Tag</button>
+                    <button onclick="addTagField()" type="button" class="rounded bg-blue-500 px-4 py-2 text-white">Add Multiple Tags</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <div id="updateThemeModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
-        <div class="rounded-lg bg-white p-6">
-            <h2 class="mb-4 text-2xl">Update Theme</h2>
-            <form action="./actions/theme/update_theme.php" method="POST" enctype="multipart/form-data">
-                <input type="hidden" id="update_theme_id" name="theme_id" value="" />
-                <div class="flex flex-col space-y-4">
-                    <input class="rounded border border-gray-300 p-2" type="text" name="theme_nom" placeholder="Theme Nom" required />
-                    <input class="rounded border border-gray-300 p-2" type="file" name="theme_image" required />
-                </div>
-                <div class="mt-3 flex justify-center">
-                    <button type="button" class="mr-2 rounded bg-gray-500 px-4 py-2 text-white" onclick="closeUpdateModal()">Cancel</button>
-                    <button type="submit" class="rounded bg-blue-500 px-4 py-2 text-white">Update Theme</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
-    <!-- Content -->
     <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
         <main class="w-full flex-grow p-6">
-            <h1 class="text-3xl text-black pb-6">Gestion des Clients</h1>
-            <button class="bg-blue-500 text-white px-4 py-2 rounded" @click="isModalOpen = true">Add Theme</button>
+            <h1 class="text-3xl text-black pb-6">Gestion des Tag</h1>
+            <button class="bg-blue-500 text-white px-4 py-2 rounded" @click="isModalOpen = true">Add tag</button>
             <div class="w-full mt-6">
                 <p class="text-xl pb-3 flex items-center">
                     <i class="fas fa-list mr-3"></i> Client List
@@ -210,16 +191,15 @@ $allthemes = $admin->getAllThemes();
                     <table class="min-w-full bg-white">
                         <thead class="bg-gray-800 text-white">
                         <tr>
-                            <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-base">Theme Nom</th>
-                            <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-base">Theme Image</th>
+                            <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-base">Tag Nom</th>
                             <th class="text-left py-3 px-4 uppercase font-semibold text-base">Actions</th>
                         </tr>
                         </thead>
                         <tbody class="text-gray-700">
                         <!-- ...existing rows... -->
                         <?php
-                        foreach($allthemes as $theme) {
-                            echo Helpers::renderTheme($theme);
+                        foreach($allTags as $tag) {
+                            echo Helpers::renderTag($tag);
                         }
                         ?>
                         <!-- ...existing rows... -->
@@ -231,24 +211,18 @@ $allthemes = $admin->getAllThemes();
     </div>
 </div>
 <script>
-    function openUpdateModal() {
-        document.getElementById('updateThemeModal').classList.remove('hidden');
-    }
-
-    function closeUpdateModal() {
-        document.getElementById('updateThemeModal').classList.add('hidden');
-    }
-
-    function setModalId(btn) {
-        let parent = btn.closest('tr');
-        let id = parent.getAttribute('data-id');
-
-        document.getElementById('update_theme_id').value = id;
-        openUpdateModal();
+    let index = 1;
+    function addTagField() {
+        const tagsFields = document.getElementById('tags-fields');
+        const tagField = document.createElement('div');
+        tagField.classList.add('flex', 'flex-col', 'space-y-4');
+        tagField.innerHTML = `
+            <input class="rounded border border-gray-300 p-2" type="text" name="tags[${index}][tag_nom]" placeholder="Tag Nom" required />
+        `;
+        tagsFields.appendChild(tagField);
+        index++;
     }
 </script>
-
-
 <!-- AlpineJS -->
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 <!-- Font Awesome -->
