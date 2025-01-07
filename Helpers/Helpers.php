@@ -155,15 +155,15 @@ class Helpers
 
     public static function renderTheme($theme) {
         return '
-        <tr>
+        <tr data-id="'. $theme['theme_id'] .'">
                                     <td class="w-1/4 text-left py-3 px-4">' . $theme['theme_nom'] . '</td>
                                     <td class="w-1/4 text-left py-3 px-4">
                                         <img src="https://placehold.co/600x400@2x.png" alt="theme image" class="w-20 h-20 object-cover rounded-lg">
                                         </td>
                                     <td class="text-left py-3 px-4 flex space-x-2">
                                     
-                                        <button class="bg-yellow-500 text-white px-2 py-1 rounded flex items-center">
-                                            <a href="./actions/theme/update_theme.php?id=' . $theme['theme_id'] . '"><i class="fas fa-sync-alt"></i></a>
+                                        <button class="bg-yellow-500 text-white px-2 py-1 rounded flex items-center" @click="isModalOpen = true" onclick="setModalId(this)">
+                                           <i class="fas fa-sync-alt"></i></a>
                                         </button>
                                         
                                         <button class="bg-red-500 text-white px-2 py-1 rounded flex items-center">

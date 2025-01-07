@@ -170,6 +170,24 @@ $allthemes = $user->getAllThemes();
         </div>
     </div>
 
+    <div id="updateThemeModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+        <div class="rounded-lg bg-white p-6">
+            <h2 class="mb-4 text-2xl">Update Theme</h2>
+            <form action="./actions/theme/update_theme.php" method="POST" enctype="multipart/form-data">
+                <input type="hidden" id="update_theme_id" name="theme_id" value="" />
+                <div class="flex flex-col space-y-4">
+                    <input class="rounded border border-gray-300 p-2" type="text" name="theme_nom" placeholder="Theme Nom" required />
+                    <input class="rounded border border-gray-300 p-2" type="file" name="theme_image" required />
+                </div>
+                <div class="mt-3 flex justify-center">
+                    <button type="button" class="mr-2 rounded bg-gray-500 px-4 py-2 text-white" onclick="closeUpdateModal()">Cancel</button>
+                    <button type="submit" class="rounded bg-blue-500 px-4 py-2 text-white">Update Theme</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
     <!-- Content -->
     <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
         <main class="w-full flex-grow p-6">
@@ -203,7 +221,23 @@ $allthemes = $user->getAllThemes();
         </main>
     </div>
 </div>
+<script>
+    function openUpdateModal() {
+        document.getElementById('updateThemeModal').classList.remove('hidden');
+    }
 
+    function closeUpdateModal() {
+        document.getElementById('updateThemeModal').classList.add('hidden');
+    }
+
+    function setModalId(btn) {
+        let parent = btn.closest('tr');
+        let id = parent.getAttribute('data-id');
+
+        document.getElementById('update_theme_id').value = id;
+        openUpdateModal();
+    }
+</script>
 
 
 <!-- AlpineJS -->

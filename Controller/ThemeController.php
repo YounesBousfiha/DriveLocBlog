@@ -20,12 +20,13 @@ trait ThemeController
         return $stmt->execute();
     }
 
-    public function updateTheme($id, $theme_name)
+    public function &updateTheme($id, $theme_nom ,$theme_image)
     {
-        $query = "UPDATE $this->tableTheme SET theme_name = :theme_name WHERE theme_id = :id";
+        $query = "UPDATE $this->tableTheme SET theme_nom = :theme_nom, theme_image = :theme_image WHERE theme_id = :id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':theme_name', $theme_name);
+        $stmt->bindParam(':theme_nom', $theme_nom);
+        $stmt->bindParam(':theme_image', $theme_image);
         $stmt->execute();
     }
 
