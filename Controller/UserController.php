@@ -16,6 +16,10 @@ class UserController {
     use CategorieController {
         getAllCategories as public;
     }
+
+    use ThemeController {
+        getAllThemes as public;
+    }
     public function __construct($db) {
         $this->setDb($db);
     }

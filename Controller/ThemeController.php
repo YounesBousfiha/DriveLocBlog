@@ -31,7 +31,7 @@ trait ThemeController
 
     public function deleteTheme($id)
     {
-        $query = "UPDATE $this->tableTheme SET is_deleted = 1 WHERE theme_id = :id";
+        $query = "delete from $this->tableTheme WHERE theme_id = :id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
