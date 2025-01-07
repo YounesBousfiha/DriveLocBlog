@@ -152,10 +152,29 @@ $allthemes = $user->getAllThemes();
         </button> -->
     </header>
 
+    <div x-show="isModalOpen" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" @click.away="isModalOpen = false">
+        <div class="rounded-lg bg-white p-6">
+            <h2 class="mb-4 text-2xl">Add theme</h2>
+            <form action="./actions/theme/create_theme.php" method="POST" enctype="multipart/form-data">
+                <div id="car-fields">
+                    <div class="flex flex-col space-y-4">
+                        <input class="rounded border border-gray-300 p-2" type="text" name="theme_nom" placeholder="Theme Nom" required />
+                        <input class="rounded border border-gray-300 p-2" type="file" name="theme_image" required />
+                    </div>
+                </div>
+                <div class="mt-3 flex justify-center">
+                    <button type="button" class="mr-2 rounded bg-gray-500 px-4 py-2 text-white" @click="isModalOpen = false">Cancel</button>
+                    <button type="submit" class="rounded bg-blue-500 px-4 py-2 text-white">Add theme</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Content -->
     <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
         <main class="w-full flex-grow p-6">
             <h1 class="text-3xl text-black pb-6">Gestion des Clients</h1>
-
+            <button class="bg-blue-500 text-white px-4 py-2 rounded" @click="isModalOpen = true">Add Theme</button>
             <div class="w-full mt-6">
                 <p class="text-xl pb-3 flex items-center">
                     <i class="fas fa-list mr-3"></i> Client List
