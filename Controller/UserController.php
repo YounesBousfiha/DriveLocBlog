@@ -20,6 +20,11 @@ class UserController {
     use ThemeController {
         getAllThemes as public;
     }
+    use CommentaireController {
+        createCommentaire as public;
+        updateCommentaire as public;
+        deleteCommentaire as public;
+    }
     public function __construct($db) {
         $this->setDb($db);
     }
