@@ -198,7 +198,7 @@ class Helpers
                                     <td class="w-1/4 text left py-3 px-4">' . $comment['commentaire_content'] . '</td>
                                     <td class="text-left py-3 px-4 flex space-x-2">
                                         <button class="bg-red-500 text-white px-2 py-1 rounded flex items-center">
-                                            <a href="./actions/commentaire/delete_commentaire.php?id=' . $comment['commentaire_id'] . '"><i class="fas fa-times"></i> </a>
+                                            <a href="./actions/commentaire/delete_comment.php?id=' . $comment['commentaire_id'] . '"><i class="fas fa-times"></i> </a>
                                         </button>
                                     </td>
                                 </tr>

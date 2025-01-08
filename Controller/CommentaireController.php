@@ -32,7 +32,7 @@ trait CommentaireController
 
     public function deleteCommentaire($id)
     {
-        $query = "UPDATE $this->tableCommentaire SET is_deleted = 1 WHERE commentaire_id = :id";
+        $query = "DELETE FROM $this->tableCommentaire WHERE commentaire_id = :id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
