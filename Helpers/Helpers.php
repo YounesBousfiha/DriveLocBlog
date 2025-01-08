@@ -205,4 +205,18 @@ class Helpers
         ';
     }
 
+    public static function renderArticlesForAdmin($article) {
+        return '        <tr data-id="' . $article['article_id'] . '">
+                                    <td class="w-1/4 text left py-3 px-4">' . $article['article_title'] . '</td>
+                                    <td class="w-1/4 text left py-3 px-4">' . $article['article_status'] . '</td>
+                                    <td class="w-1/4 text left py-3 px-4">' . $article['email'] . '</td>
+                                    <td class="w-1/4 text left py-3 px-4">' . $article['theme_nom'] . '</td>
+                                    <td class="text-left py-3 px-4 flex space-x-2">
+                                        <button class="bg-red-500 text-white px-2 py-1 rounded flex items-center">
+                                            <a href="./actions/articles/delete_article.php?id=' . $article['article_id'] . '"><i class="fas fa-times"></i> </a>
+                                        </button>
+                                    </td>
+                                </tr>';
+    }
+
 }

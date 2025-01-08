@@ -41,7 +41,7 @@ trait ArticleController
 
     public function getAllArticles()
     {
-        $sql = "SELECT * FROM {$this->tableArticle} WHERE";
+        $sql = "SELECT * FROM {$this->tableArticle}";
         $stmt = $this->db->prepare($sql);
         if($stmt->execute()) {
             return $stmt->fetchAll();
@@ -76,6 +76,16 @@ trait ArticleController
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
+    }
+
+    public function getArticleForAdmin() {
+        $sql = "SELECT * FROM GestionDesArticles";
+        $stmt = $this->db->prepare($sql);
+        if($stmt->execute()) {
+            return $stmt->fetchAll();
+        } else {
+            return null;
+        }
     }
 
 
