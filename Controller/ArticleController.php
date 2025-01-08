@@ -33,7 +33,9 @@ trait ArticleController
 
     public function deleteArticle($id)
     {
-        $query = "UPDATE $this->tableArticle SET is_deleted = 1 WHERE article_id = :id";
+
+        $query = "DELETE FROM $this->tableArticle WHERE article_id = :id";
+
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
@@ -81,6 +83,17 @@ trait ArticleController
     public function getArticleForAdmin() {
         $sql = "SELECT * FROM GestionDesArticles";
         $stmt = $this->db->prepare($sql);
+        if($stmt->execute()) {
+            return $stmt->fetchAll();
+        } else {
+            return null;
+        }
+    }
+
+    public function getArticlesPerTheme($theme_id) {
+        $sql = "SELECT * FROM {$this->tableArticle} WHERE fk_theme_id = :theme_id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':theme_id', $theme_id);
         if($stmt->execute()) {
             return $stmt->fetchAll();
         } else {
