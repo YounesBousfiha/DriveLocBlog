@@ -25,6 +25,12 @@ class UserController {
         updateCommentaire as public;
         deleteCommentaire as public;
     }
+    use TagsController {
+        getAllTags as public;
+    }
+    use ArticleController {
+        getAllArticles as public;
+    }
     public function __construct($db) {
         $this->setDb($db);
     }
