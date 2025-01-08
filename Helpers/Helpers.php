@@ -188,4 +188,21 @@ class Helpers
                                 </tr>';
     }
 
+    public static function renderCommentsForAdmin($comment)
+    {
+        return '
+        <tr data-id="' . $comment['commentaire_id'] . '">
+                                    <td class="w-1/4 text left py-3 px-4">' . $comment['nom'] . '</td>
+                                    <td class="w-1/4 text left py-3 px-4">' . $comment['prenom'] . '</td>
+                                    <td class="w-1/4 text left py-3 px-4">' . $comment['article_title'] . '</td>
+                                    <td class="w-1/4 text left py-3 px-4">' . $comment['commentaire_content'] . '</td>
+                                    <td class="text-left py-3 px-4 flex space-x-2">
+                                        <button class="bg-red-500 text-white px-2 py-1 rounded flex items-center">
+                                            <a href="./actions/commentaire/delete_commentaire.php?id=' . $comment['commentaire_id'] . '"><i class="fas fa-times"></i> </a>
+                                        </button>
+                                    </td>
+                                </tr>
+        ';
+    }
+
 }

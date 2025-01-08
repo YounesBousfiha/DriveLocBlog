@@ -40,7 +40,7 @@ trait CommentaireController
 
     public function getAllCommentaires()
     {
-        $sql = "SELECT * FROM {$this->tableCommentaire} WHERE is_deleted = 0";
+        $sql = "SELECT * FROM {$this->tableCommentaire}";
         $stmt = $this->db->prepare($sql);
         if($stmt->execute()) {
             return $stmt->fetchAll();
@@ -49,6 +49,14 @@ trait CommentaireController
         }
     }
 
-    public function getCommentairePerArticle() {}
+    public function getCommentaireForAdmin() {
+        $sql = "SELECT * FROM CommentaireForAdmin";
+        $stmt = $this->db->prepare($sql);
+        if($stmt->execute()) {
+            return $stmt->fetchAll();
+        } else {
+            return null;
+        }
+    }
 
 }

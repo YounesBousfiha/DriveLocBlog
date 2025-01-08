@@ -57,3 +57,10 @@ CREATE TABLE IF NOT EXISTS favoris(
                                       FOREIGN KEY (fk_article_id) REFERENCES  articles(article_id) ON DELETE CASCADE
 );
 
+-- CREATE VIEW 1
+CREATE VIEW CommentaireForAdmin as
+SELECT C.commentaire_id ,U.nom, U.prenom, A.article_title, C.commentaire_content
+FROM commentaires C
+         JOIN articles A ON A.article_id = C.fk_article_id
+         JOIN users U ON U.user_id = C.fk_user_id
+

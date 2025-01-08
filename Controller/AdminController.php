@@ -9,7 +9,8 @@ class AdminController {
         Stats,
         AvisController,
         ThemeController,
-        TagsController;
+        TagsController,
+        CommentaireController;
     use AuthController {
         login as public;
         logout as public;
