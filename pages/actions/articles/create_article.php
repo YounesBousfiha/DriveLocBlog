@@ -4,6 +4,7 @@ use Younes\DriveLoc\Controller\UserController;
 use Younes\DriveLoc\Config\DBConnection;
 use Younes\DriveLoc\Model\Article;
 use Younes\DriveLoc\Helpers\Validator;
+use Younes\DriveLoc\Helpers\Helpers;
 
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
@@ -12,7 +13,6 @@ $db = DBConnection::getConnection()->conn;
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     // TODO : This Article Creation method don't handle the Tags
-    // TODO : in WriteArticle Page Select the Theme
     // INFO: The Request received with Informations need without image & the tags as a string
     //var_dump($_POST['selectedTags']);
     //var_dump($_FILES);
@@ -26,6 +26,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo 'Error: ' . $e->getMessage();
     }
 
-    //Helpers::redirect($_SERVER['HTTP_REFERER']);
+    header('Location: http://localhost:63342/DriveLocBlog/pages/ArticlePerTheme.php?theme_id='.$theme_id);
 }
 
