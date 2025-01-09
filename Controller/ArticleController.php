@@ -80,6 +80,17 @@ trait ArticleController
         $stmt->execute();
     }
 
+    public function GetUserArticle($user_id) {
+        $sql = "SELECT A.article_id, A.article_title, A.article_image, A.article_status, T.theme_nom as article_theme FROM articles A JOIN themes T ON A.fk_theme_id = T.theme_id JOIN users U ON A.fk_user_id = U.user_id WHERE A.fk_user_id = :user_id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':user_id', $user_id);
+        if($stmt->execute()) {
+            return $stmt->fetchAll();
+        } else {
+            return null;
+        }
+    }
+
     public function getArticleForAdmin() {
         $sql = "SELECT * FROM GestionDesArticles";
         $stmt = $this->db->prepare($sql);

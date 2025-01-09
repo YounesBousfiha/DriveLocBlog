@@ -20,6 +20,6 @@ if($_SERVER['REQUEST_METHOD'] === 'GET') {
         echo 'Error: ' . $e->getMessage();
     }
 
-    //header('Location: ' . $_SERVER['HTTP_REFERER']);
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
 }
 

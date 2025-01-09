@@ -200,6 +200,7 @@ class Helpers
                                         <button class="bg-red-500 text-white px-2 py-1 rounded flex items-center">
                                             <a href="./actions/commentaire/delete_comment.php?id=' . $comment['commentaire_id'] . '"><i class="fas fa-times"></i> </a>
                                         </button>
+                                        
                                     </td>
                                 </tr>
         ';
@@ -212,11 +213,41 @@ class Helpers
                                     <td class="w-1/4 text left py-3 px-4">' . $article['email'] . '</td>
                                     <td class="w-1/4 text left py-3 px-4">' . $article['theme_nom'] . '</td>
                                     <td class="text-left py-3 px-4 flex space-x-2">
-                                        <button class="bg-red-500 text-white px-2 py-1 rounded flex items-center">
-                                            <a href="./actions/articles/delete_article.php?id=' . $article['article_id'] . '"><i class="fas fa-times"></i> </a>
+                                        <button class="bg-green-500 text-white px-2 py-1 rounded flex items-center">
+                                            <a href="./actions/articles/approuve_article.php?id=' . $article['article_id'] . '"><i class="fas fa-check"></i> </a>
                                         </button>
+                                       <button class="bg-red-900 text-white px-2 py-1 rounded flex items-center">
+                                            <a href="./actions/articles/reject_article.php?id=' . $article['article_id'] . '"><i class="fas fa-times"></i> </a>
+                                       </button>
+                                       <button class="bg-red-500 text-white px-2 py-1 rounded flex items-center">
+                                            <a href="./actions/articles/delete_article.php?id=' . $article['article_id'] . '"><i class="fas fa-trash"></i> </a>
+                                       </button>
                                     </td>
                                 </tr>';
     }
 
+    public static function RenderUserArticles($blog) {
+        return '<tr>
+                                    <td class="w-1/4 text-left py-3 px-4">' . $blog['article_title'] . '</td>
+                                    <td class="w-1/4 text-left py-3 px-4">' . $blog['article_image']. '</td>
+                                    <td class="w-1/4 text-left py-3 px-4">' . $blog['article_theme'] . '</td>
+                                    <td class="w-1/4 text-left py-3 px-4">
+                                        <span class="' . ($blog['article_status'] == 'Pending' ? 'bg-yellow-200 text-yellow-800' : ($blog['article_status'] == 'Approuve' ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800')) . ' py-1 px-3 rounded-full text-xs">
+                                            ' . $blog['article_status'] . '
+                                        </span>
+                                    </td>
+                                    <td>
+                                    <button>
+                                         <a href="./actions/articles/update_article.php?id=' . $blog['article_id'] . '" class="bg-yellow-500 text-white px-2 py-1 rounded flex items-center">
+                                           <i class="fas fa-edit"></i>
+                                        </a>
+                                    </button>
+                                    <button>
+                                         <a href="./actions/articles/delete_article.php?id=' . $blog['article_id'] . '" class="bg-red-500 text-white px-2 py-1 rounded flex items-center">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </button>
+                                    </td>
+</tr>';
+    }
 }
