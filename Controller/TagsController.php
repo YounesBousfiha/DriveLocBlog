@@ -49,4 +49,16 @@ trait TagsController
         }
     }
 
+    public function getTagsByArticle($id)
+    {
+        $sql = "SELECT T.tag_nom FROM articles_tags A JOIN tags T ON T.tag_id = A.fk_tags_id  WHERE fk_article_id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        if($stmt->execute()) {
+            return $stmt->fetchAll();
+        } else {
+            return null;
+        }
+    }
+
 }

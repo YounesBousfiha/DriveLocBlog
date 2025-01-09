@@ -15,6 +15,7 @@ if(isset($_GET['article_id'])) {
     $articleId = Validator::ValidateData($_GET['article_id']);
     $article = $userController->getArticle($articleId);
     $comments = $userController->getCommentsByArticleId($articleId);
+    $tags = $userController->getTagsByArticle($articleId);
 }
 
 ?>
@@ -138,6 +139,17 @@ if(isset($_GET['article_id'])) {
                 <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white"><?= htmlspecialchars($article['article_title']) ?></h1>
             </header>
             <p class="lead"><?= htmlspecialchars($article['article_content']) ?></p>
+
+            <!-- Tags section -->
+            <section class="mt-6">
+                <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Tags</h2>
+                <div class="flex flex-wrap mt-2">
+                   <?php foreach ($tags as $tag): ?>
+                        <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800"><?= htmlspecialchars($tag['tag_nom']) ?></span>
+                    <?php endforeach; ?>
+                </div>
+            </section>
+
             <section class="not-format">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Discussion</h2>

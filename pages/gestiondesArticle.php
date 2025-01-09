@@ -10,6 +10,14 @@ $db = DBConnection::getConnection()->conn;
 
 $adminController = new AdminController($db);
 
+$adminData = $adminController->validateUser();
+
+if($adminData['fk_role_id'] != 1) {
+    http_response_code(403);
+    echo "You are not authorized to access this page";
+    die();
+}
+
 $allArticles = $adminController->getArticleForAdmin();
 
 // var_dump($allArticles);
