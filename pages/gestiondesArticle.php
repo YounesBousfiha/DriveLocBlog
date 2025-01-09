@@ -78,6 +78,10 @@ $allArticles = $adminController->getArticleForAdmin();
             <i class="fas fa-comment mr-3"></i>
             Gestion des Comment
         </a>
+        <a href="gestiondesArticle.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <i class="fas fa-newspaper mr-3"></i>
+            Gestion des Articles
+        </a>
         <a href="../index.php" class="flex items-center active-nav-link text-white py-4 pl-6 nav-item">
             <i class="fas fa-home mr-3"></i>
             Home
@@ -149,6 +153,10 @@ $allArticles = $adminController->getArticleForAdmin();
             <a href="gestiondesComment.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                 <i class="fas fa-comment"></i>
                 Gestion des Commentaire
+            </a>
+            <a href="gestiondesArticle.php.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                <i class="fas fa-newspaper mr-3"></i>
+                Gestion des Aricles
             </a>
             <a href="../index.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                 <i class="fas fa-home mr-3"></i>

@@ -66,7 +66,7 @@ trait ArticleController
 
     public function approuveArticle($id)
     {
-        $query = "UPDATE $this->tableArticle SET article_status = 'Approuve' WHERE article_id = :id";
+        $query = "UPDATE $this->tableArticle SET article_status = 'Approve' WHERE article_id = :id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
