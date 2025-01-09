@@ -54,7 +54,7 @@ trait ArticleController
 
     public function getArticle($id)
     {
-        $sql = "SELECT * FROM {$this->tableArticle} WHERE article_id = :id";
+        $sql = "SELECT  U.nom, U.prenom, A.article_id, article_title, A.article_content, A.article_image FROM articles A JOIN users U ON A.fk_user_id = U.user_id WHERE A.article_id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $id);
         if($stmt->execute()) {
@@ -111,6 +111,7 @@ trait ArticleController
             return null;
         }
     }
+
 
 
 }
