@@ -14,7 +14,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $admin = new AdminController($db);
 
     var_dump($admin);
-    // TODO : Validation of the data
 
     $admin->createVehicule($_POST);
 }

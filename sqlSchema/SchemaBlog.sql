@@ -64,3 +64,11 @@ FROM commentaires C
          JOIN articles A ON A.article_id = C.fk_article_id
          JOIN users U ON U.user_id = C.fk_user_id
 
+-- CREATE VIEW 2
+CREATE VIEW ArticleForUser as
+SELECT O.nom as owner_nom, O.prenom as owner_prenom , A.article_title, A.article_image, A.article_content, R.nom as commentAuthorNom, R.prenom as commentAuthorPrenom , C.commentaire_content
+FROM articles A
+         JOIN commentaires C ON A.article_id = C.fk_article_id
+         JOIN users R ON C.fk_user_id = R.user_id
+         JOIN users O ON A.fk_user_id = O.user_id
+

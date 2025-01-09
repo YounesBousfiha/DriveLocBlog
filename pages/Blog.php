@@ -11,12 +11,6 @@ $userController = new UserController($db);
 
 $alltheme = $userController->getAllThemes();
 
-// TODO: display All Themes in the Blog Page
-// TODO: From A button in the Blog Page, redirect to the ArticlesPerTheme Page
-// TODO : in ArticlesPerTheme Page, display all articles related to the selected theme
-// TODO : in ArticlesPerTheme Page, add a button to redirect to the Article Page
-// TODO : in Article Page, display the selected article with its comments
-// TODO : in Article Page, add a form to add a comment
 ?>
 
 <!DOCTYPE html>

@@ -13,12 +13,9 @@ $userController = new UserController($db);
 
 if(isset($_GET['article_id'])) {
     $articleId = Validator::ValidateData($_GET['article_id']);
-    $article = $userController->getArticle($articleId); // TODO: Create View to Display the Article With user Information
-    $comments = $userController->getCommentsByArticleId($articleId); // TODO: Create View to Display the Comments With user Information
+    $article = $userController->getArticle($articleId);
+    $comments = $userController->getCommentsByArticleId($articleId);
 }
-
-// var_dump($article);
-// var_dump($comments);
 
 ?>
 <!DOCTYPE html>
