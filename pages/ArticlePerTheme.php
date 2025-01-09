@@ -127,6 +127,13 @@ if(isset($_GET['theme_id'])) {
 
 <main class="container mx-auto p-4">
     <h1 class="text-2xl font-bold mb-4">Articles</h1>
+    <div class="flex justify-end my-4">
+        <?php
+        if($_COOKIE['auth_token']) {
+            echo '<a href="writeBlog.php?theme_id=' . Validator::ValidateData($_GET['theme_id']) . '" class="text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Write an Article</a>';
+        }
+        ?>
+    </div>
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <?php
         foreach ($articles as $article) {

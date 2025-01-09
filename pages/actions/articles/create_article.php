@@ -3,7 +3,7 @@
 use Younes\DriveLoc\Controller\UserController;
 use Younes\DriveLoc\Config\DBConnection;
 use Younes\DriveLoc\Model\Article;
-use Younes\DriveLoc\Helpers\Helpers;
+use Younes\DriveLoc\Helpers\Validator;
 
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
@@ -16,7 +16,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     // INFO: The Request received with Informations need without image & the tags as a string
     //var_dump($_POST['selectedTags']);
     //var_dump($_FILES);
-    $theme_id = 1;
+    $theme_id = Validator::ValidateData($_POST['theme_id']);
     $userController = new UserController($db);
     $userData = $userController->ValidateUser();
     try {

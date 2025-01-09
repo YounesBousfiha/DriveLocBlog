@@ -2,12 +2,15 @@
 
 use Younes\DriveLoc\Controller\UserController;
 use Younes\DriveLoc\Config\DBConnection;
+use Younes\DriveLoc\Helpers\Validator;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $db = DBConnection::getConnection()->conn;
 
 $userController = new UserController($db);
+
+$theme_id = Validator::ValidateData($_GET['theme_id']);
 
 $alltags = $userController->getAllTags();
 ?>
@@ -22,6 +25,7 @@ $alltags = $userController->getAllTags();
 <div class="container mx-auto p-4">
     <h1 class="text-2xl font-bold mb-4">Write an Article</h1>
     <form action="./actions/articles/create_article.php" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="theme_id" value="<?php echo $theme_id; ?>">
         <div class="mb-4">
             <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
             <input type="text" id="title" name="title" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
