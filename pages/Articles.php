@@ -130,7 +130,7 @@ if(isset($_GET['article_id'])) {
                         <img class="mr-4 w-16 h-16 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Author">
                         <div>
                             <a href="#" rel="author" class="text-xl font-bold text-gray-900 dark:text-white"><?= htmlspecialchars($article['prenom'] . ' ' . $article['nom']) ?></a>
-                            <p class="text-base text-gray-500 dark:text-gray-400"><time pubdate datetime="<?= htmlspecialchars($article['article_date']) ?>" title="<?= htmlspecialchars($article['article_date']) ?>"><?= htmlspecialchars(date('M. d, Y', strtotime($article['article_date']))) ?></time></p>
+                            <p class="text-base text-gray-500 dark:text-gray-400"><time> 01-03-2023 </time></p>
                         </div>
                     </div>
                 </address>
@@ -154,10 +154,11 @@ if(isset($_GET['article_id'])) {
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Discussion</h2>
                 </div>
-                <form class="mb-6">
+                <form class="mb-6" action="actions/commentaire/create_comment.php" method="POST">
+                    <input type="hidden" value="<?php echo $articleId; ?>" name="article_id">
                     <div class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                         <label for="comment" class="sr-only">Your comment</label>
-                        <textarea id="comment" rows="6" class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 dark:text-white dark:placeholder-gray-400 dark:bg-gray-800" placeholder="Write a comment..." required></textarea>
+                        <textarea id="comment" name="commentaire_content" rows="6" class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 dark:text-white dark:placeholder-gray-400 dark:bg-gray-800" placeholder="Write a comment..." required></textarea>
                     </div>
                     <button type="submit" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">Post comment</button>
                 </form>
