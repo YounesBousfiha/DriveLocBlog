@@ -9,16 +9,29 @@ trait ArticleController
 
     public function createArticle($instanceArticle)
     {
-        $columns = implode(",", array_keys(get_object_vars($instanceArticle)));
-        $placeholders = ":" . implode(", :", array_keys(get_object_vars($instanceArticle)));
-        $sql = "INSERT INTO {$this->tableArticle} ({$columns}) VALUES ({$placeholders})";
-        $stmt = $this->db->prepare($sql);
-
-        foreach ($instanceArticle as $key => $value) {
-            $stmt->bindValue(":{$key}", $value);
+        $InsertRequest = "CALL CreateArticle(:article_title, :article_content, :article_image, :fk_user_id, :fk_theme_id)";
+        $stmt = $this->db->prepare($InsertRequest);
+        $stmt->bindParam(':article_title', $instanceArticle->article_title);
+        $stmt->bindParam(':article_content', $instanceArticle->article_content);
+        $stmt->bindParam(':article_image', $instanceArticle->article_image);
+        $stmt->bindParam(':fk_user_id', $instanceArticle->fk_user_id);
+        $stmt->bindParam(':fk_theme_id', $instanceArticle->fk_theme_id);
+        if($stmt->execute()) {
+            $data = $stmt->fetch();
+            $lastInsert = $data['lastInsert'];
+            foreach ($instanceArticle->tags as $key => $tag) {
+                $InsertRequest = "INSERT INTO articles_tags (fk_article_id, fk_tags_id) VALUES (:article_id, :tag_id)";
+                $stmt = $this->db->prepare($InsertRequest);
+                $stmt->bindParam(':article_id', $lastInsert);
+                $stmt->bindParam(':tag_id', $key);
+                if(!$stmt->execute()) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            return false;
         }
-
-        return $stmt->execute();
     }
 
     public function updateArticle($id, $article_title, $article_content)
