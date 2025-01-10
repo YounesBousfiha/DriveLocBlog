@@ -157,6 +157,16 @@ if(isset($_GET['article_id'])) {
             </header>
             <p class="lead"><?= htmlspecialchars($article['article_content']) ?></p>
 
+            <section class="mt-6">
+                <form id="favoriForm">
+                    <input type="hidden" name="article_id" value="<?= htmlspecialchars($articleId) ?>">
+                    <button onclick="addToFavoris()" type="button" class="flex items-center text-red-500 hover:text-red-700">
+                        <i class="fa fa-heart"></i>
+                        <span class="ml-2">Add to Favoris</span>
+                    </button>
+                </form>
+            </section>
+
             <!-- Tags section -->
             <section class="mt-6">
                 <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Tags</h2>
@@ -390,6 +400,24 @@ if(isset($_GET['article_id'])) {
     </div>
 </footer>
 <script>
+
+    function addToFavoris(e) {
+        let form = document.getElementById('favoriForm');
+
+        let formData = new FormData(form);
+
+        fetch('actions/favori/add_favouri.php', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log("Data", data);
+            })
+            .catch( error => {
+                console.error(error);
+            })
+    }
     function openUpdateModal() {
         document.getElementById('updateCommentModal').classList.remove('hidden');
     }

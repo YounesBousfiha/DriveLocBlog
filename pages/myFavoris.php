@@ -12,8 +12,6 @@ $userController = new UserController($db);
 $userData = $userController->ValidateUser();
 
 $favoris = $userController->getFavoris($userData['user_id']);
-
-var_dump($favoris);
 ?>
 <!DOCTYPE html>
 <html lang="en">
