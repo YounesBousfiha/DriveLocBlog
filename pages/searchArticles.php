@@ -2,15 +2,27 @@
 
 use Younes\DriveLoc\Controller\UserController;
 use Younes\DriveLoc\Config\DBConnection;
+use Younes\DriveLoc\Helpers\Validator;
 
-require_once '../vendor/autoload.php';
+
+require_once __DIR__ . '/../vendor/autoload.php';
 
 $db = DBConnection::getConnection()->conn;
 
 $userController = new UserController($db);
 
-$alltheme = $userController->getAllThemes();
-
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    try {
+        $search = Validator::ValidateData($_POST['search']);
+    } catch (Exception $e) {
+        echo 'Error: ' . $e->getMessage();
+    }
+    if(empty($search)) {
+        $articles = "";
+    } else {
+        $articles = $userController->searchArticles($search);
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -128,15 +140,25 @@ $alltheme = $userController->getAllThemes();
             </div>
         </div>
 
+        <div>
+            <?php
+            if(count($articles) > 0) {
+                echo '<h2 class="text-2xl font-bold mb-4">Search Results : ' . count($articles) . '</h2>';
+            } else {
+                echo '<h2 class="text-2xl font-bold mb-4">No Results Found</h2>';
+            }
+            ?>
+        </div>
+
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             <?php
-            foreach ($alltheme as $theme) {
+            foreach ($articles as $article) {
                 echo '<div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden">
                 <img src="https://placehold.co/600x400" class="w-full h-32 object-cover object-center" alt="blog image">
                 <div class="p-6">
-                    <h2 class="mb-2 text-xl font-bold text-gray-800 dark:text-white">'. $theme['theme_nom'] .'</h2>
-                    <p class="text-sm text-gray-700 dark:text-gray-400">'. $theme['theme_description'] .'</p>
-                    <a href="./ArticlePerTheme.php?theme_id='. $theme['theme_id'] .'" class="block mt-4 text-indigo-500 hover:underline">Read more</a> 
+                    <h2 class="mb-2 text-xl font-bold text-gray-800 dark:text-white">'. $article['article_title'] .'</h2>
+                    <p class="text-sm text-gray-700 dark:text-gray-400">'. substr($article['article_content'], 0, 100) .'</p>
+                    <a href="./Articles.php?article_id='. $article['article_id'] .'" class="block mt-4 text-indigo-500 hover:underline">Read more</a> 
                 </div>
             </div>';
             }

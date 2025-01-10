@@ -125,6 +125,17 @@ trait ArticleController
         }
     }
 
+    public function searchArticles($search) {
+        $sql = "SELECT * FROM {$this->tableArticle} WHERE article_title LIKE :search";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(':search', "%$search%");
+        if($stmt->execute()) {
+            return $stmt->fetchAll();
+        } else {
+            return null;
+        }
+    }
+
 
 
 }
