@@ -11,7 +11,7 @@ $db = DBConnection::getConnection()->conn;
 $userController = new UserController($db);
 
 try {
-    $favorisId = Validator::ValidateData($_GET['article_id']);
+    $favorisId = Validator::ValidateData($_GET['favori_id']);
 } catch (Exception $e) {
     echo 'Error: ' . $e->getMessage();
 }

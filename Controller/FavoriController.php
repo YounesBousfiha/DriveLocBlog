@@ -23,7 +23,7 @@ trait FavoriController
 
     public function deleteFromFavoris($id)
     {
-        $query = "DELETE FROM $this->tableFavori WHERE favori_id = :id";
+        $query = "DELETE FROM $this->tableFavori WHERE favoris_id = :id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':id', $id);
         if($stmt->execute()) {
@@ -35,7 +35,7 @@ trait FavoriController
 
     public function getFavoris($id)
     {
-        $sql = "SELECT * FROM {$this->tableFavori} WHERE fk_user_id = :id";
+        $sql = "SELECT F.favoris_id, A.article_id, A.article_title, A.article_content, A.article_image  FROM {$this->tableFavori} F JOIN articles A ON F.fk_article_id = A.article_id WHERE F.fk_user_id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $id);
         if($stmt->execute()) {
