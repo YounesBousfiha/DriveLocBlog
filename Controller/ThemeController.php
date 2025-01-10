@@ -20,7 +20,7 @@ trait ThemeController
         return $stmt->execute();
     }
 
-    public function &updateTheme($id, $theme_nom ,$theme_image)
+    public function updateTheme($id, $theme_nom ,$theme_image)
     {
         $query = "UPDATE $this->tableTheme SET theme_nom = :theme_nom, theme_image = :theme_image WHERE theme_id = :id";
         $stmt = $this->db->prepare($query);

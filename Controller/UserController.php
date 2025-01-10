@@ -4,7 +4,7 @@ namespace Younes\DriveLoc\Controller;
 
 
 class UserController {
-    use AuthController, AvisController;
+    use AuthController, AvisController, FavoriController;
     use ReservationController {
         createReservation as public;
         getReservationForUser as public;

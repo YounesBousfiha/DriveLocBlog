@@ -4,6 +4,7 @@ namespace Younes\DriveLoc\Model;
 
 use Younes\DriveLoc\Helpers\Validator;
 use Exception;
+
 class Theme
 {
     public $theme_nom;
