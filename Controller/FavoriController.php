@@ -23,10 +23,26 @@ trait FavoriController
 
     public function deleteFromFavoris($id)
     {
-        $query = "UPDATE $this->tableFavori SET is_deleted = 1 WHERE favori_id = :id";
+        $query = "DELETE FROM $this->tableFavori WHERE favori_id = :id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':id', $id);
-        $stmt->execute();
+        if($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getFavoris($id)
+    {
+        $sql = "SELECT * FROM {$this->tableFavori} WHERE fk_user_id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        if($stmt->execute()) {
+            return $stmt->fetchAll();
+        } else {
+            return null;
+        }
     }
 
 }
