@@ -10,15 +10,6 @@ require_once __DIR__ . '/../../../vendor/autoload.php';
 
 header('Content-Type: application/json');
 
-$data = [
-    'status' => 'success',
-    'message' => 'This is a JSON response',
-    'data' => [
-        'id' => 1,
-        'name' => 'Sample Item'
-    ]
-];
-
 $db = DBConnection::getConnection()->conn;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -30,6 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $userController = new UserController($db);
     $userData = $userController->ValidateUser();
+
+    if($userController->exists($userData['user_id'], $article_id)) {
+        return;
+    }
+
     try {
         $favori = new Favoris($userData['user_id'], $article_id);
         $userController->addToFavoris($favori);

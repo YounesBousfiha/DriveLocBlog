@@ -45,4 +45,15 @@ trait FavoriController
         }
     }
 
+    public function exists($fk_user_id, $fk_article_id) {
+        $stmt = $this->db->prepare("SELECT COUNT(*) FROM favoris WHERE fk_user_id = :fk_user_id AND fk_article_id = :fk_article_id");
+        $stmt->bindValue(':fk_user_id', $fk_user_id);
+        $stmt->bindValue(':fk_article_id', $fk_article_id);
+        if($stmt->execute()) {
+            return $stmt->fetchColumn() > 0;
+        } else {
+            return false;
+        }
+    }
+
 }
