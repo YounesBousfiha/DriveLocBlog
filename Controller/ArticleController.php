@@ -115,7 +115,7 @@ trait ArticleController
     }
 
     public function getArticlesPerTheme($theme_id) {
-        $sql = "SELECT * FROM {$this->tableArticle} WHERE fk_theme_id = :theme_id";
+        $sql = "SELECT * FROM {$this->tableArticle} WHERE fk_theme_id = :theme_id AND article_status = 'Approve'";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':theme_id', $theme_id);
         if($stmt->execute()) {

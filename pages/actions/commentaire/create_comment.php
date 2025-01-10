@@ -16,5 +16,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fk_user_id = $userdata['user_id'];
     $commentaireInstance = new Commentaire($_POST['commentaire_content'], $fk_user_id, $_POST['article_id']);
     $userController->createCommentaire($commentaireInstance);
-    //header('Location: ' . $_SERVER['HTTP_REFERER']);
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
 }

@@ -34,6 +34,7 @@ if(isset($_GET['article_id'])) {
 
 <body>
 <header>
+
     <nav class="bg-white border-gray-200 dark:bg-gray-900">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
@@ -121,6 +122,22 @@ if(isset($_GET['article_id'])) {
     </nav>
 </header>
 
+<div id="updateCommentModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="rounded-lg bg-white p-6">
+        <h2 class="mb-4 text-2xl">Update Comment</h2>
+        <form action="./actions/commentaire/update_comment.php" method="POST">
+            <input type="hidden" id="update_comment_id" name="comment_id" value="" />
+            <div class="flex flex-col space-y-4">
+                <textarea class="rounded border border-gray-300 p-2" name="comment_content" id="update_comment_content" placeholder="Update your comment" required></textarea>
+            </div>
+            <div class="mt-3 flex justify-center">
+                <button type="button" class="mr-2 rounded bg-gray-500 px-4 py-2 text-white" onclick="closeUpdateModal()">Cancel</button>
+                <button type="submit" class="rounded bg-blue-500 px-4 py-2 text-white">Update Comment</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <main class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
     <div class="flex justify-between px-4 mx-auto max-w-screen-xl">
         <article class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
@@ -164,6 +181,17 @@ if(isset($_GET['article_id'])) {
                 </form>
                 <?php foreach ($comments as $comment): ?>
                     <article class="p-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-900">
+                        <div data-id="<?php echo $comment['commentaire_id'] ?>" class="flex justify-end space-x-4">
+                            <button type="button" onclick="setModalId(this)" class="text-blue-700 hover:text-blue-800">
+                                <i class="fa fa-edit"></i>
+                            </button>                           <?php
+                            if($comment['fk_user_id'] == $user['user_id']) {
+                            echo '
+                            <a href="actions/commentaire/delete_comment.php?comment_id='. $comment['commentaire_id'] .'" class="text-red-700 hover:text-red-800"><i class="fa fa-times"></i></a>';
+                            }
+                        ?>
+                        </div>
+
                         <footer class="flex justify-between items-center mb-2">
                             <div class="flex items-center">
                                 <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"><img class="mr-2 w-6 h-6 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" alt="User"><?= htmlspecialchars($comment['prenom'] . ' ' . $comment['nom']) ?></p>
@@ -361,8 +389,23 @@ if(isset($_GET['article_id'])) {
         </div>
     </div>
 </footer>
+<script>
+    function openUpdateModal() {
+        document.getElementById('updateCommentModal').classList.remove('hidden');
+    }
+
+    function closeUpdateModal() {
+        document.getElementById('updateCommentModal').classList.add('hidden');
+    }
+
+    function setModalId(btn) {
+        let divParent = btn.closest('div');
+        document.getElementById('update_comment_id').value = divParent.getAttribute('data-id');
+        openUpdateModal();
+
+    }
+</script>
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-<!-- Font Awesome -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
 </body>
 </html>
