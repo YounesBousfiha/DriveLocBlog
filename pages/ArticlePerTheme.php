@@ -139,8 +139,7 @@ $pagesnumber = ceil(count($totalarticles) / $limit);
         </div>
         <div>
             <label>
-                Articles Per Page:
-                <select onchange="setLimit(this)">
+                <select onchange="setLimit(this)" class="block w-full px-3 py-2 text-base text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     <option>Default</option>
                     <option>5</option>
                     <option>10</option>
