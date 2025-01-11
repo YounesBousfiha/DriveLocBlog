@@ -2,6 +2,8 @@
 
 namespace Younes\DriveLoc\Controller;
 
+use PDO;
+
 trait ArticleController
 {
     private $db;
@@ -136,12 +138,12 @@ trait ArticleController
         }
     }
 
-    public function articlePagination($theme_id, $limit, $offset)
+    public function articlePaginationPertheme($theme_id, $limit, $offset)
     {
         $sql = "SELECT * FROM {$this->tableArticle} WHERE fk_theme_id = :fk_theme_id LIMIT :limit OFFSET :offset";
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(":limit", $limit);
-        $stmt->bindValue(":offset", $offset);
+        $stmt->bindValue(":limit", (int)$limit, \PDO::PARAM_INT);
+        $stmt->bindValue(":offset", (int)$offset, \PDO::PARAM_INT);
         $stmt->bindParam(':fk_theme_id', $theme_id);
         if ($stmt->execute()) {
             return $stmt->fetchAll();

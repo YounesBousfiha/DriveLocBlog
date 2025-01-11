@@ -12,9 +12,14 @@ $db = DBConnection::getConnection()->conn;
 
 $userController = new UserController($db);
 
+$limit = 3;
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
 if(isset($_GET['theme_id'])) {
     try {
-        $articles = $userController->getArticlesPerTheme(Validator::ValidateData($_GET['theme_id']));
+        $articles = $userController->articlePaginationPertheme(Validator::ValidateData($_GET['theme_id']), $limit, $offset);
+        $totalarticles = $userController->getArticlesPerTheme(Validator::ValidateData($_GET['theme_id']));
     } catch (Exception $e) {
         echo 'Error: ' . $e->getMessage();
     }
@@ -22,6 +27,9 @@ if(isset($_GET['theme_id'])) {
     Helpers::redirect('http://localhost/DriveLoc/pages/Blog.php');
 }
 
+$pagesnumber = ceil(count($totalarticles) / $limit);
+
+var_dump($pagesnumber);
 ?>
 
 <!DOCTYPE html>
@@ -149,6 +157,23 @@ if(isset($_GET['theme_id'])) {
         </div>';
         }
         ?>
+    </div>
+    <div class="flex justify-center space-x-2 my-3">
+        <?php if ($page > 1): ?>
+            <li class="flex items-center justify-center shrink-0 cursor-pointer text-base font-bold text-blue-600 h-9 rounded-md">
+                <a href="?theme_id=<?= Validator::ValidateData($_GET['theme_id']);  ?>&page=<?= $page - 1; ?>">Prev</a>
+            </li>
+        <?php endif; ?>
+        <?php for ($i = 1; $i <= $pagesnumber; $i++): ?>
+            <li class="p-2 flex items-center justify-center shrink-0 <?php echo $i == $page ? 'bg-blue-500 text-white' : 'hover:bg-gray-50 text-gray-800'; ?> border-2 cursor-pointer text-base font-bold px-[13px] h-9 rounded-md">
+                <a href="?theme_id=<?= Validator::ValidateData($_GET['theme_id']);  ?>&page=<?= $i; ?>"><?= $i; ?></a>
+            </li>
+        <?php endfor; ?>
+        <?php if ($page < $pagesnumber): ?>
+            <li class="flex items-center justify-center shrink-0 cursor-pointer text-base font-bold text-blue-600 h-9 rounded-md p-2">
+                <a href="?theme_id=<?=  Validator::ValidateData($_GET['theme_id']);  ?>&page=<?= $page + 1; ?>">Next</a>
+            </li>
+        <?php endif; ?>
     </div>
 
 <footer class="bg-white dark:bg-gray-900">

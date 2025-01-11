@@ -12,9 +12,11 @@ $admin = new AdminController(DBConnection::getConnection()->conn);
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $adminData = $admin->validateUser();
+
     if($adminData['role_id'] != 1) {
         http_response_code(403);
     }
+
     $fk_user_id = $adminData['user_id'];
     $theme = new Theme($_POST['theme_nom'], $_FILES['theme_image'], $fk_user_id);
 

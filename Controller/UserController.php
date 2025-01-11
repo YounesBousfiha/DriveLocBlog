@@ -30,6 +30,7 @@ class UserController {
     }
     use ArticleController {
         getAllArticles as public;
+        articlePaginationPertheme as public;
     }
     public function __construct($db) {
         $this->setDb($db);
