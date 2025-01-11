@@ -12,7 +12,8 @@ $db = DBConnection::getConnection()->conn;
 
 $userController = new UserController($db);
 
-$limit = 3;
+
+$limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
@@ -28,8 +29,6 @@ if(isset($_GET['theme_id'])) {
 }
 
 $pagesnumber = ceil(count($totalarticles) / $limit);
-
-var_dump($pagesnumber);
 ?>
 
 <!DOCTYPE html>
@@ -134,7 +133,22 @@ var_dump($pagesnumber);
 </header>
 
 <main class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">Articles</h1>
+    <div class="flex justify-between">
+        <div>
+            <h1 class="text-2xl font-bold mb-4">Articles</h1>
+        </div>
+        <div>
+            <label>
+                Articles Per Page:
+                <select onchange="setLimit(this)">
+                    <option>Default</option>
+                    <option>5</option>
+                    <option>10</option>
+                    <option>15</option>
+                </select>
+            </label>
+        </div>
+    </div>
     <div class="flex justify-end my-4">
         <?php
         if($_COOKIE['auth_token']) {
@@ -161,17 +175,17 @@ var_dump($pagesnumber);
     <div class="flex justify-center space-x-2 my-3">
         <?php if ($page > 1): ?>
             <li class="flex items-center justify-center shrink-0 cursor-pointer text-base font-bold text-blue-600 h-9 rounded-md">
-                <a href="?theme_id=<?= Validator::ValidateData($_GET['theme_id']);  ?>&page=<?= $page - 1; ?>">Prev</a>
+                <a href="?theme_id=<?= Validator::ValidateData($_GET['theme_id']);  ?>&page=<?= $page - 1; ?>&limit=<?= $limit ?>">Prev</a>
             </li>
         <?php endif; ?>
         <?php for ($i = 1; $i <= $pagesnumber; $i++): ?>
             <li class="p-2 flex items-center justify-center shrink-0 <?php echo $i == $page ? 'bg-blue-500 text-white' : 'hover:bg-gray-50 text-gray-800'; ?> border-2 cursor-pointer text-base font-bold px-[13px] h-9 rounded-md">
-                <a href="?theme_id=<?= Validator::ValidateData($_GET['theme_id']);  ?>&page=<?= $i; ?>"><?= $i; ?></a>
+                <a href="?theme_id=<?= Validator::ValidateData($_GET['theme_id']);  ?>&page=<?= $i; ?>&limit=<?= $limit ?>"><?= $i; ?></a>
             </li>
         <?php endfor; ?>
         <?php if ($page < $pagesnumber): ?>
             <li class="flex items-center justify-center shrink-0 cursor-pointer text-base font-bold text-blue-600 h-9 rounded-md p-2">
-                <a href="?theme_id=<?=  Validator::ValidateData($_GET['theme_id']);  ?>&page=<?= $page + 1; ?>">Next</a>
+                <a href="?theme_id=<?=  Validator::ValidateData($_GET['theme_id']);  ?>&page=<?= $page + 1; ?>&limit=<?= $limit ?>">Next</a>
             </li>
         <?php endif; ?>
     </div>
@@ -276,6 +290,14 @@ var_dump($pagesnumber);
         </div>
     </div>
 </footer>
+    <script>
+        function setLimit(menu) {
+            let limit = menu.value;
+            let url = new URL(window.location.href);
+            url.searchParams.set('limit', limit);
+            window.location.href = url.toString();
+        }
+    </script>
 </body>
 </html>
 
