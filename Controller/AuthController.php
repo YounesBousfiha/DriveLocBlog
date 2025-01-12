@@ -77,9 +77,9 @@ trait AuthController {
                         $stm->bindValue(':email', $email);
                         $stm->execute();
                         if ($data['fk_role_id'] == 1) {
-                            header("Location: ../dashboard.php");
+                            header("Location: http://localhost:63342/DriveLocBlog/pages/admin-home.php");
                         } else {
-                            header("Location: ../home.php");
+                            header("Location: http://localhost:63342/DriveLocBlog/index.php");
                         }
                     }
                 }
@@ -124,7 +124,7 @@ trait AuthController {
 
     public static function logout() {
         setcookie("auth_token", "", time() - 3600, '/');
-        Helpers::redirect('http://localhost:63342/DriveLoc/index.php');
+        Helpers::redirect('http://localhost:63342/DriveLocBlog/index.php');
     }
 }
 

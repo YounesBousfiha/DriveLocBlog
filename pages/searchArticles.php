@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo 'Error: ' . $e->getMessage();
     }
     if(empty($search)) {
-        $articles = "";
+        $articles = [];
     } else {
         $articles = $userController->searchArticles($search);
     }
@@ -113,8 +113,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">About</a>
                     </li>
                     <li>
-                        <a href="#"
+                        <a href="explore.php"
                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Explore</a>
+                    </li>
+                    <?php
+                    if($_COOKIE['auth_token']) {
+                        $user = $userController->validateUser();
+                        if($user['fk_role_id'] === 2) {
+                            echo '<li>
+                            <a href="myReservation.php"
+                                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">My Reservations</a>';
+                        }
+                    } ?>
+                    <li>
+                        <a href="Blog.php"
+                           class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Blog</a>
                     </li>
                     <li>
                         <a href="#"

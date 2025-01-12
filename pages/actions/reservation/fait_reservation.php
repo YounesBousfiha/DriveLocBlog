@@ -26,6 +26,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $reservation->setDb($db);
     $status = $reservation->createReservation($reservationData);
 
-    Helpers::redirect('http://localhost:63342/DriveLoc/pages/myReservation.php');
+    Helpers::redirect('http://localhost:63342/DriveLocBlog/pages/myReservation.php');
 
 }
