@@ -5,7 +5,6 @@ use Younes\DriveLoc\Helpers\Validator;
 use Younes\DriveLoc\Helpers\Helpers;
 use Younes\DriveLoc\Config\DBConnection;
 
-// TODO: Implement Dynamic Pagination for the Articles
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $db = DBConnection::getConnection()->conn;
@@ -15,12 +14,14 @@ $userController = new UserController($db);
 
 $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
+$tag_id = isset($_GET['tag_id']) ? $_GET['tag_id'] : null;
 $offset = ($page - 1) * $limit;
 
 if(isset($_GET['theme_id'])) {
     try {
         $articles = $userController->articlePaginationPertheme(Validator::ValidateData($_GET['theme_id']), $limit, $offset);
         $totalarticles = $userController->getArticlesPerTheme(Validator::ValidateData($_GET['theme_id']));
+        $alltags = $userController->getAllTags();
     } catch (Exception $e) {
         echo 'Error: ' . $e->getMessage();
     }
@@ -29,6 +30,9 @@ if(isset($_GET['theme_id'])) {
 }
 
 $pagesnumber = ceil(count($totalarticles) / $limit);
+
+//var_dump($articles[0]['article_status']);
+
 ?>
 
 <!DOCTYPE html>
@@ -147,6 +151,17 @@ $pagesnumber = ceil(count($totalarticles) / $limit);
                 </select>
             </label>
         </div>
+        <div>
+            <label>
+                <select onchange="fetchArticlePerTags(this)" class="block w-full px-3 py-2 text-base text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    <option>default</option>
+                    <option value="null">All</option>
+                    <?php foreach ($alltags as $tag) : ?>
+                        <option value="<?= $tag['tag_id'] ?>"><?= $tag['tag_nom'] ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </label>
+        </div>
     </div>
     <div class="flex justify-end my-4">
         <?php
@@ -174,17 +189,17 @@ $pagesnumber = ceil(count($totalarticles) / $limit);
     <div class="flex justify-center space-x-2 my-3">
         <?php if ($page > 1): ?>
             <li class="flex items-center justify-center shrink-0 cursor-pointer text-base font-bold text-blue-600 h-9 rounded-md">
-                <a href="?theme_id=<?= Validator::ValidateData($_GET['theme_id']);  ?>&page=<?= $page - 1; ?>&limit=<?= $limit ?>">Prev</a>
+                <a href="?theme_id=<?= Validator::ValidateData($_GET['theme_id']);  ?>&page=<?= $page - 1; ?>&limit=<?= $limit ?>&tag_id<?= $tag_id ?>">Prev</a>
             </li>
         <?php endif; ?>
         <?php for ($i = 1; $i <= $pagesnumber; $i++): ?>
             <li class="p-2 flex items-center justify-center shrink-0 <?php echo $i == $page ? 'bg-blue-500 text-white' : 'hover:bg-gray-50 text-gray-800'; ?> border-2 cursor-pointer text-base font-bold px-[13px] h-9 rounded-md">
-                <a href="?theme_id=<?= Validator::ValidateData($_GET['theme_id']);  ?>&page=<?= $i; ?>&limit=<?= $limit ?>"><?= $i; ?></a>
+                <a href="?theme_id=<?= Validator::ValidateData($_GET['theme_id']);  ?>&page=<?= $i; ?>&limit=<?= $limit ?>&tag_id<?= $tag_id ?>"><?= $i; ?></a>
             </li>
         <?php endfor; ?>
         <?php if ($page < $pagesnumber): ?>
             <li class="flex items-center justify-center shrink-0 cursor-pointer text-base font-bold text-blue-600 h-9 rounded-md p-2">
-                <a href="?theme_id=<?=  Validator::ValidateData($_GET['theme_id']);  ?>&page=<?= $page + 1; ?>&limit=<?= $limit ?>">Next</a>
+                <a href="?theme_id=<?=  Validator::ValidateData($_GET['theme_id']);  ?>&page=<?= $page + 1; ?>&limit=<?= $limit ?>&tag_id<?= $tag_id ?>">Next</a>
             </li>
         <?php endif; ?>
     </div>
@@ -294,6 +309,17 @@ $pagesnumber = ceil(count($totalarticles) / $limit);
             let limit = menu.value;
             let url = new URL(window.location.href);
             url.searchParams.set('limit', limit);
+            window.location.href = url.toString();
+        }
+
+        function fetchArticlePerTags(menu) {
+            let tag_id = menu.value;
+            let url = new URL(window.location.href);
+            if(tag_id === "null") {
+                url.searchParams.delete('tag_id')
+            } else {
+                url.searchParams.set('tag_id', tag_id);
+            }
             window.location.href = url.toString();
         }
     </script>

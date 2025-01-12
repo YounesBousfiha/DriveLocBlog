@@ -138,9 +138,9 @@ trait ArticleController
         }
     }
 
-    public function articlePaginationPertheme($theme_id, $limit, $offset)
+    public function articlePaginationPertheme($theme_id, $limit, $offset, $tag_id = null)
     {
-        $sql = "SELECT * FROM {$this->tableArticle} WHERE fk_theme_id = :fk_theme_id LIMIT :limit OFFSET :offset";
+        $sql = "SELECT * FROM {$this->tableArticle} WHERE fk_theme_id = :fk_theme_id AND article_status = 'Approve' LIMIT :limit OFFSET :offset";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(":limit", (int)$limit, \PDO::PARAM_INT);
         $stmt->bindValue(":offset", (int)$offset, \PDO::PARAM_INT);

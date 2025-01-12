@@ -40,7 +40,7 @@ trait ThemeController
 
     public function getAllThemes()
     {
-        $sql = "SELECT * FROM {$this->tableTheme}";
+        $sql = "SELECT * FROM {$this->tableTheme} WHERE article_status = 'Approve'";
         $stmt = $this->db->prepare($sql);
         if($stmt->execute()) {
             return $stmt->fetchAll();
