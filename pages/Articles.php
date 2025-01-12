@@ -15,6 +15,7 @@ if(isset($_GET['article_id'])) {
     $articleId = Validator::ValidateData($_GET['article_id']);
     $article = $userController->getArticle($articleId);
     $comments = $userController->getCommentsByArticleId($articleId);
+    // TODO: fix the Comment FK & user_id matching
     $tags = $userController->getTagsByArticle($articleId);
 }
 
@@ -202,15 +203,16 @@ if(isset($_GET['article_id'])) {
                     </div>
                     <button type="submit" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">Post comment</button>
                 </form>
-                <?php foreach ($comments as $comment): ?>
+               <?php foreach ($comments as $comment): ?>
                     <article class="p-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-900">
                         <div data-id="<?php echo $comment['commentaire_id'] ?>" class="flex justify-end space-x-4">
-                         <?php
-                            if($comment['fk_user_id'] == $user['user_id']) {
-                            echo '
-                             <button type="button" onclick="setModalId(this)" class="text-blue-700 hover:text-blue-800">
+
+                            <?php
+                            if($comment['fk_user_id'] === $user['user_id']) {
+                                echo '
+                            <button type="button" onclick="setModalId(this)" class="text-blue-700 hover:text-blue-800">
                                 <i class="fa fa-edit"></i>
-                            </button>  
+                            </button>
                             <a href="actions/commentaire/delete_comment.php?comment_id='. $comment['commentaire_id'] .'" class="text-red-700 hover:text-red-800"><i class="fa fa-times"></i></a>';
                             }
                         ?>

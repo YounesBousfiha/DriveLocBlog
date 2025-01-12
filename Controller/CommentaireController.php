@@ -60,7 +60,7 @@ trait CommentaireController
     }
 
     public function getCommentsByArticleId ($article_id) {
-        $sql = "SELECT * FROM commentaires C  JOIN articles A ON A.article_id = C.fk_article_id JOIN users U ON C.fk_user_id = U.user_id WHERE A.article_id = :article_id";
+        $sql = "SELECT C.*, U.nom, U.prenom FROM commentaires C  JOIN articles A ON A.article_id = C.fk_article_id JOIN users U ON C.fk_user_id = U.user_id WHERE A.article_id = :article_id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':article_id', $article_id);
         if($stmt->execute()) {
