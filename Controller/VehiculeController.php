@@ -117,10 +117,12 @@ trait VehiculeController
         }
     }
 
-    public function vehiculesPerCategory($category) {
-        $query = "SELECT * FROM vehicules WHERE fk_categorie_id = :category_id";
+    public function vehiculesPerCategory($category, $limit, $offset) {
+        $query = "SELECT * FROM vehicules WHERE fk_categorie_id = :category_id LIMIT :limit OFFSET :offset";
         $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':category_id', $category);
+        $stmt->bindValue(':category_id', $category);
+        $stmt->bindValue(':limit', (int)$limit, \PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int)$offset, \PDO::PARAM_INT);
         $stmt->execute();
 
         $results = $stmt->fetchAll();

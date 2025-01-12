@@ -213,7 +213,7 @@ $totalPages = ceil($totalVeicules / $limit);
                             </div>
                         </form>
                         <div class="relative">
-                            <select id="category-filter" class="block w-full sm:max-w-xs p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <select onchange="sendCategory(this)" id="category-filter" class="block w-full sm:max-w-xs p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 <option value="">All Categories</option>
                                 <?php foreach ($allcategories as $category): ?>
                                     <option value="<?php echo $category['categorie_id']; ?>"><?php echo $category['categorie_nom']; ?></option>
@@ -362,10 +362,24 @@ $totalPages = ceil($totalVeicules / $limit);
     <script>
         function setModalDataId(button) {
             const parentDiv = button.closest('div[data-id]');
-            console.log(parentDiv);
-            const dataId = parentDiv.getAttribute('data-id')
-            console.log(dataId);
+            const dataId = parentDiv.getAttribute('data-id');
             document.getElementById('vehicule_id').value = dataId;
+        }
+
+        function sendCategory(menu) {
+            let categoryId = menu.value;
+            let form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'explore.php';
+
+            let input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'category';
+            input.value = categoryId;
+
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
         }
     </script>
 </body>
