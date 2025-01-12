@@ -166,7 +166,7 @@ $pagesnumber = ceil(count($totalarticles) / $limit);
         <div>
             <label>
                 <select onchange="fetchArticlePerTags(this)" class="block w-full px-3 py-2 text-base text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    <option>default</option>
+                    <option value="null">default</option>
                     <option value="null">All</option>
                     <?php foreach ($alltags as $tag) : ?>
                         <option value="<?= $tag['tag_id'] ?>"><?= $tag['tag_nom'] ?></option>
@@ -201,17 +201,16 @@ $pagesnumber = ceil(count($totalarticles) / $limit);
     <div class="flex justify-center space-x-2 my-3">
         <?php if ($page > 1): ?>
             <li class="flex items-center justify-center shrink-0 cursor-pointer text-base font-bold text-blue-600 h-9 rounded-md">
-                <a href="?theme_id=<?= Validator::ValidateData($_GET['theme_id']);  ?>&page=<?= $page - 1; ?>&limit=<?= $limit ?>&tag_id=<?= $tag_id ?>">Prev</a>
-            </li>
+                <a href="?theme_id=<?= Validator::ValidateData($_GET['theme_id']); ?>&page=<?= $page - 1; ?>&limit=<?= $limit ?><?= $tag_id ? '&tag_id=' . $tag_id : '' ?>">Prev</a> </li>
         <?php endif; ?>
         <?php for ($i = 1; $i <= $pagesnumber; $i++): ?>
             <li class="p-2 flex items-center justify-center shrink-0 <?php echo $i == $page ? 'bg-blue-500 text-white' : 'hover:bg-gray-50 text-gray-800'; ?> border-2 cursor-pointer text-base font-bold px-[13px] h-9 rounded-md">
-                <a href="?theme_id=<?= Validator::ValidateData($_GET['theme_id']);  ?>&page=<?= $i; ?>&limit=<?= $limit ?>&tag_id=<?= $tag_id ?>"><?= $i; ?></a>
+                <a href="?theme_id=<?= Validator::ValidateData($_GET['theme_id']);  ?>&page=<?= $i; ?>&limit=<?= $limit ?><?= $tag_id ? '&tag_id=' . $tag_id : '' ?>"><?= $i; ?></a>
             </li>
         <?php endfor; ?>
         <?php if ($page < $pagesnumber): ?>
             <li class="flex items-center justify-center shrink-0 cursor-pointer text-base font-bold text-blue-600 h-9 rounded-md p-2">
-                <a href="?theme_id=<?=  Validator::ValidateData($_GET['theme_id']);  ?>&page=<?= $page + 1; ?>&limit=<?= $limit ?>&tag_id=<?= $tag_id ?>">Next</a>
+                <a href="?theme_id=<?=  Validator::ValidateData($_GET['theme_id']);  ?>&page=<?= $page + 1; ?>&limit=<?= $limit ?><?= $tag_id ? '&tag_id=' . $tag_id : '' ?>">Next</a>
             </li>
         <?php endif; ?>
     </div>

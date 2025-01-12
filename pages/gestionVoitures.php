@@ -52,7 +52,7 @@ if($_COOKIE['auth_token']) {
                 <i class="fas fa-tachometer-alt mr-3"></i>
                 Dashboard
             </a>
-            <a href="gestionVoitures.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <a href="gestionVoitures.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                 <i class="fas fa-car mr-3"></i>
                 Gestion des voitures
             </a>
@@ -60,23 +60,35 @@ if($_COOKIE['auth_token']) {
                 <i class="fas fa-table mr-1"></i>
                 Gestion des reservation
             </a>
-            <a href="gestionCategorie.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
-                <i class="fas fa-user mr-3"></i>
-                Gestion des Client
-            </a>
             <a href="gestionAvis.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                 <i class="fas fa-comments mr-3"></i>
                 Gestion des avis
+            </a>
+            <a href="gestiondesthemes.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-blog mr-3"></i>
+                Gestion des themes
+            </a>
+            <a href="gestiondesTags.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-tags mr-3"></i>
+                Gestion des Tags
+            </a>
+            <a href="gestiondesComment.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-comment mr-3"></i>
+                Gestion des Comment
+            </a>
+            <a href="gestiondesArticle.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-newspaper mr-3"></i>
+                Gestion des Articles
             </a>
             <a href="../index.php" class="flex items-center active-nav-link text-white py-4 pl-6 nav-item">
                 <i class="fas fa-home mr-3"></i>
                 Home
             </a>
+            <a href="./actions/auth/logout.php" class="absolute w-full upgrade-btn bottom-0 text-white flex items-center justify-center py-4">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </a>
         </nav>
-        <a href="#" class="absolute w-full upgrade-btn bottom-0 text-white flex items-center justify-center py-4">
-            <i class="fas fa-sign-out-alt"></i>
-            Logout 
-        </a>
     </aside>
 
     <div class="w-full flex flex-col h-screen overflow-y-hidden">
@@ -119,10 +131,6 @@ if($_COOKIE['auth_token']) {
                 <a href="gestionReservation.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                     <i class="fas fa-table mr-3"></i>
                     Gestion des reservation
-                </a>
-                <a href="gestionCategorie.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i class="fas fa-user mr-3"></i>
-                    Gestion des Client
                 </a>
                 <a href="gestionAvis.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                     <i class="fas fa-comments mr-3"></i>

@@ -205,11 +205,12 @@ if(isset($_GET['article_id'])) {
                 <?php foreach ($comments as $comment): ?>
                     <article class="p-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-900">
                         <div data-id="<?php echo $comment['commentaire_id'] ?>" class="flex justify-end space-x-4">
-                            <button type="button" onclick="setModalId(this)" class="text-blue-700 hover:text-blue-800">
-                                <i class="fa fa-edit"></i>
-                            </button>                           <?php
+                         <?php
                             if($comment['fk_user_id'] == $user['user_id']) {
                             echo '
+                             <button type="button" onclick="setModalId(this)" class="text-blue-700 hover:text-blue-800">
+                                <i class="fa fa-edit"></i>
+                            </button>  
                             <a href="actions/commentaire/delete_comment.php?comment_id='. $comment['commentaire_id'] .'" class="text-red-700 hover:text-red-800"><i class="fa fa-times"></i></a>';
                             }
                         ?>

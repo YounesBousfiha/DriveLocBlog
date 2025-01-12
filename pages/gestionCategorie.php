@@ -48,7 +48,7 @@ $allCategories = $admin->getAllCategories();
 
     <aside class="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
         <div class="p-6">
-            <a href="admin-home.php" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
+            <a href="admin-home.html" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
         </div>
         <nav class="text-white text-base font-semibold pt-3">
             <a href="admin-home.php" class="flex items-center active-nav-link text-white py-4 pl-6 nav-item">
@@ -63,23 +63,35 @@ $allCategories = $admin->getAllCategories();
                 <i class="fas fa-table mr-1"></i>
                 Gestion des reservation
             </a>
-            <a href="gestionClients.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
-                <i class="fas fa-user mr-3"></i>
-                Gestion des Client
-            </a>
             <a href="gestionAvis.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                 <i class="fas fa-comments mr-3"></i>
                 Gestion des avis
+            </a>
+            <a href="gestiondesthemes.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-blog mr-3"></i>
+                Gestion des themes
+            </a>
+            <a href="gestiondesTags.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-tags mr-3"></i>
+                Gestion des Tags
+            </a>
+            <a href="gestiondesComment.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-comment mr-3"></i>
+                Gestion des Comment
+            </a>
+            <a href="gestiondesArticle.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-newspaper mr-3"></i>
+                Gestion des Articles
             </a>
             <a href="../index.php" class="flex items-center active-nav-link text-white py-4 pl-6 nav-item">
                 <i class="fas fa-home mr-3"></i>
                 Home
             </a>
+            <a href="./actions/auth/logout.php" class="absolute w-full upgrade-btn bottom-0 text-white flex items-center justify-center py-4">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </a>
         </nav>
-        <a href="#" class="absolute w-full upgrade-btn bottom-0 text-white flex items-center justify-center py-4">
-            <i class="fas fa-sign-out-alt"></i>
-            Logout 
-        </a>
     </aside>
 
     <div class="w-full flex flex-col h-screen overflow-y-hidden">
@@ -123,10 +135,6 @@ $allCategories = $admin->getAllCategories();
                     <i class="fas fa-table mr-3"></i>
                     Gestion des reservation
                 </a>
-                <a href="gestionClients.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i class="fas fa-user mr-3"></i>
-                    Gestion des Client
-                </a>
                 <a href="gestionAvis.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                     <i class="fas fa-comments mr-3"></i>
                     Gestion des Avis
@@ -155,7 +163,7 @@ $allCategories = $admin->getAllCategories();
     
         <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
             <main class="w-full flex-grow p-6">
-                <h1 class="text-3xl text-black pb-6">Gestion des Clients</h1>
+                <h1 class="text-3xl text-black pb-6">Gestion des Category</h1>
                 <div>
                     <form action="./actions/categorie/create_categorie.php" method="POST">
                         <input type="text" name="categorie_nom" placeholder="categorie_nom" class="w-full p-2 mb-4 border border-gray-400 rounded">
