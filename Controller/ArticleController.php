@@ -140,18 +140,18 @@ trait ArticleController
 
     public function articlePaginationPertheme($theme_id, $limit, $offset, $tag_id = null)
     {
-        $sql = "SELECT A.*, T.tag_nom 
-        FROM {$this->tableArticle} A 
-        JOIN articles_tags AT ON A.article_id = AT.fk_article_id 
-        JOIN tags T ON T.tag_id = AT.fk_tags_id 
-        WHERE A.fk_theme_id = :fk_theme_id 
-        AND A.article_status = 'Approve'";
+        $sql = "SELECT A.*, GROUP_CONCAT(T.tag_nom) as tags
+            FROM {$this->tableArticle} A
+            LEFT JOIN articles_tags AT ON A.article_id = AT.fk_article_id
+            LEFT JOIN tags T ON T.tag_id = AT.fk_tags_id
+            WHERE A.fk_theme_id = :fk_theme_id
+            AND A.article_status = 'Approve'";
 
         if ($tag_id !== null) {
             $sql .= " AND AT.fk_tags_id = :tag_id";
         }
 
-        $sql .= " LIMIT :limit OFFSET :offset";
+        $sql .= " GROUP BY A.article_id LIMIT :limit OFFSET :offset";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(":limit", (int)$limit, \PDO::PARAM_INT);
